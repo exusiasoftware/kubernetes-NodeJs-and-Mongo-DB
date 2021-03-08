@@ -17,7 +17,8 @@ spec:
           image: exusiasoftware/nodejs-blog-test
           env:
             - name: DB_URI
-              value: 'mongodb://10.96.189.83/node-js-blog'
+              #use the mongoservice ip kubectl get svc  
+              value: 'mongodb://10.111.225.60/node-js-blog'
           ports:
             - containerPort: 3000
 
