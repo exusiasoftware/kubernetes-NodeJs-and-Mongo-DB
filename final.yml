@@ -1,0 +1,104 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: mongodb-pv-volume
+  labels:
+    type: local
+spec:
+  storageClassName: standard 
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/data/db"
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mongodb-pv-claim
+spec:
+  storageClassName: standard 
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+     
+---      
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongoservice
+spec:
+  type: NodePort
+  ports:
+    - port: 27017
+      targetPort: 27017
+  selector:
+    app: mongo
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo
+spec:
+  selector:
+    matchLabels:
+      app: mongo
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: mongo
+    spec:
+      containers:
+        - image: mongo:latest
+          name: mongo        
+          ports:
+            - containerPort: 27017
+              name: mongo
+          volumeMounts:
+            - name: mongodb-pv-volume
+              mountPath: /data/db
+      volumes:
+        - name: mongodb-pv-volume
+          persistentVolumeClaim:
+            claimName: mongodb-pv-claim
+
+---            
+name: node-blog-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: node
+  template:
+    metadata:
+      labels:
+        app: node
+    spec:
+      containers:
+        - name: nodejsblog
+          image: exusiasoftware/nodejs-blog-test
+          env:
+            - name: DB_URI
+              #use the mongoservice ip kubectl get svc  
+              value: 'mongodb://10.111.225.60/node-js-blog'
+          ports:
+            - containerPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nodeservice
+spec:
+  selector:
+    app: node
+  ports:
+    - port: 80 # expose the service on internal port 80
+      targetPort: 3000 # our NodeJS app listens on port 3000
+  type: LoadBalancer

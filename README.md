@@ -33,7 +33,7 @@ mongodb-pv-volume   5Gi        RWO            Retain           Bound    blogsite
 
 Create MongoDB Deployment:
 ```
- kubectl create -n blogsite -f mongodb-pv.yml 
+ kubectl create -n blogsite -f mongodb.yml 
  kubectl get -n blogsite pods
 
  NAME                     READY   STATUS              RESTARTS   AGE
@@ -99,5 +99,7 @@ kubectl delete -n blogsite deployment node-blog-deployment
 kubectl delete -n blogsite svc nodeservice
 kubectl delete -n blogsite svc mongoservice
 kubectl delete -n blogsite pvc mongodb-pv-claim
+kubectl patch --namespace=blogsite pv mongodb-pv-volume  -p '{"metadata":{"finalizers":null}'
+
 kubectl delete namespace blogsite
 ```
