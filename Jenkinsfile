@@ -5,7 +5,7 @@ pipeline{
             steps{
                 kubernetesDeploy(
                   kubeconfigId: 'kubeconfig',
-                  configs: 'final.yml',
+                  configs: 'loadbalancer-service.yml',
                   enableConfigSubstitution: true  
                 )
             }
