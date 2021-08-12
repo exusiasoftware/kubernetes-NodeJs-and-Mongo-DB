@@ -10,7 +10,7 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-- script: ls!
+- script: 'cmd'
   displayName: 'Run a one-line script'
 
 - script: |
