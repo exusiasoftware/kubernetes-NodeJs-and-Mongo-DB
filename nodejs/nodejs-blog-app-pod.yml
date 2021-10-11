@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
 name: node-blog-deployment
+namespace: nodejsapp
 spec:
   replicas: 1
   selector:
@@ -18,7 +19,7 @@ spec:
           env:
             - name: DB_URI
               #use the mongoservice ip kubectl get svc  
-              value: 'mongodb://10.111.225.60/node-js-blog'
+              value: 'mongodb://mongoservice/node-js-blog'
           ports:
             - containerPort: 3000
 
