@@ -4,21 +4,21 @@ metadata:
   name: nodeservice
   namespace: nodejsapp
 spec:
+  type: NodePort
   selector:
     app: node
   ports:
     - port: 80 # expose the service on internal port 80
       targetPort: 3000 # our NodeJS app listens on port 3000
       nodePort: 30007
-  # type: LoadBalancer
-  type: NodePort
+
 
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-name: node-blog-deployment
-namespace: nodejsapp
+  name: node-blog-deployment
+  namespace: nodejsapp
 spec:
   replicas: 1
   selector:
@@ -38,4 +38,3 @@ spec:
               value: 'mongodb://mongoservice/node-js-blog'
           ports:
             - containerPort: 3000
-
