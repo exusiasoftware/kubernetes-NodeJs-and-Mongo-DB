@@ -1,0 +1,28 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: mongodb-pv-volume
+  namespace: uat-nodejsapp
+  labels:
+    type: local
+spec:
+  storageClassName: standard 
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/data/db"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mongodb-pv-claim
+  namespace: uat-nodejsapp
+spec:
+  storageClassName: standard 
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi

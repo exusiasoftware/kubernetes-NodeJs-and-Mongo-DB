@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongoservice
+  namespace: uat-nodejsapp
+spec:
+  type: NodePort
+  ports:
+    - port: 27017
+      targetPort: 27017
+  selector:
+    app: mongo
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo
+  namespace: uat-nodejsapp
+spec:
+  selector:
+    matchLabels:
+      app: mongo
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: mongo
+    spec:
+      containers:
+        - image: mongo:4.4.10-rc0
+          name: mongo        
+          ports:
+            - containerPort: 27017
+              name: mongo
+          volumeMounts:
+            - name: mongodb-pv-volume
+              mountPath: /data/db
+      volumes:
+        - name: mongodb-pv-volume
+          persistentVolumeClaim:
+            claimName: mongodb-pv-claim
