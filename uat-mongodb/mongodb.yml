@@ -34,7 +34,7 @@ spec:
             - containerPort: 27017
               name: mongo
           volumeMounts:
-            - name: mongodb-pv-volume
+            - name: uat-mongodb-pv-volume
               mountPath: /data/db
       volumes:
         - name: uat-mongodb-pv-volume
