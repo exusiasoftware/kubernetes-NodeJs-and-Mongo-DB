@@ -31,7 +31,7 @@ spec:
     spec:
       containers:
         - name: nodejsblog
-          image: exusiasoftware/nodejs-blog-test:29
+          image: exusiasoftware/nodejs-blog-test:31
           env:
             - name: DB_URI
               #use the mongoservice ip kubectl get svc  
