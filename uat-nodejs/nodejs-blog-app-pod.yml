@@ -30,11 +30,22 @@ spec:
         app: node
     spec:
       containers:
-        - name: nodejsblog
-          image: exusiasoftware/nodejs-blog-test
-          env:
-            - name: DB_URI
-              #use the mongoservice ip kubectl get svc  
-              value: 'mongodb://mongoservice/node-js-blog'
-          ports:
-            - containerPort: 3000
+      - name: nodejsblog
+        image: exusiasoftware/nodejs-blog-test
+        env:
+          - name: DB_URI 
+            value: 'mongodb://mongoservice/node-js-blog'
+        ports:
+          - containerPort: 3000
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 3000
+          initialDelaySeconds: 3
+          periodSeconds: 3
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 3000
+          initialDelaySeconds: 15
+          periodSeconds: 5
