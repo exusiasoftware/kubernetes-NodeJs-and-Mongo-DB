@@ -1,7 +1,7 @@
 kind: PersistentVolume
 apiVersion: v1
 metadata:
-  name: mongodb-pv-volume
+  name: dev-mongodb-pv-volume
   namespace: dev-nodejsapp
   labels:
     type: local
@@ -17,7 +17,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: mongodb-pv-claim
+  name: dev-mongodb-pv-claim
   namespace: dev-nodejsapp
 spec:
   storageClassName: standard 

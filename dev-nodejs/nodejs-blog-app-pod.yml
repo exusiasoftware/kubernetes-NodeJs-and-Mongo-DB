@@ -11,8 +11,6 @@ spec:
     - port: 80 # expose the service on internal port 80
       targetPort: 3000 # our NodeJS app listens on port 3000
       nodePort: 30020
-
-
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -38,3 +36,9 @@ spec:
               value: 'mongodb://mongoservice/node-js-blog'
           ports:
             - containerPort: 3000
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 3000
+            initialDelaySeconds: 3
+            periodSeconds: 3

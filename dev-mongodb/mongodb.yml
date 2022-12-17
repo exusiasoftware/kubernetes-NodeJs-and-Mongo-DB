@@ -39,4 +39,4 @@ spec:
       volumes:
         - name: mongodb-pv-volume
           persistentVolumeClaim:
-            claimName: mongodb-pv-claim
+            claimName: dev-mongodb-pv-claim
