@@ -35,7 +35,7 @@ spec:
               name: mongo
           volumeMounts:
             - name: uat-mongodb-pv-volume
-              mountPath: /data/db
+              mountPath: /data/db-uat
       volumes:
         - name: uat-mongodb-pv-volume
           persistentVolumeClaim:
