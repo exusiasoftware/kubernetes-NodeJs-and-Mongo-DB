@@ -23,9 +23,8 @@ metadata:
 spec:
   replicas: 1
   selector:
-    matchLabels:
-      app: node
-      version: "1.0"
+    app: node
+    version: "1.0"
   template:
     metadata:
       labels:
@@ -50,9 +49,8 @@ metadata:
 spec:
   replicas: 1
   selector:
-    matchLabels:
-      app: node
-      version: "2.0"
+    app: node
+    version: "2.0"
   template:
     metadata:
       labels:
