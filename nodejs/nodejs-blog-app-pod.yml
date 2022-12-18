@@ -23,12 +23,14 @@ metadata:
 spec:
   replicas: 1
   selector:
-    app: node
-    version: "1.0"
+   matchLabels:
+      app: node
+      version: "1.0"
   template:
     metadata:
       labels:
         app: node
+        version: "1.0"
     spec:
       containers:
         - name: nodejsblog
@@ -49,12 +51,14 @@ metadata:
 spec:
   replicas: 1
   selector:
-    app: node
-    version: "2.0"
+    matchLabels:
+      app: node
+      version: "1.0"
   template:
     metadata:
       labels:
         app: node
+        version: "1.0"
     spec:
       containers:
         - name: nodejsblog
