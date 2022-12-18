@@ -17,7 +17,33 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: node-blog-deployment
+  name: node-blog-deployment-1
+  namespace: nodejsapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: node
+  template:
+    metadata:
+      labels:
+        app: node
+    spec:
+      containers:
+        - name: nodejsblog
+          image: exusiasoftware/nodejs-blog-test
+          env:
+            - name: DB_URI
+              #use the mongoservice ip kubectl get svc  
+              value: 'mongodb://mongoservice/node-js-blog'
+          ports:
+            - containerPort: 3000
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-blog-deployment-2
   namespace: nodejsapp
 spec:
   replicas: 1
